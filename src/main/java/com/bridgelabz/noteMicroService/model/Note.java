@@ -36,7 +36,9 @@ public class Note implements Serializable {
 	private String reminder;
 	private String repeatReminder;
     private long userId;
-	@Override
+	
+    
+    @Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Note) {
 			Note note = (Note) obj;

@@ -1,6 +1,7 @@
 package com.bridgelabz.noteMicroService.service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
@@ -12,6 +13,7 @@ import com.bridgelabz.noteMicroService.dto.NoteDTO;
 import com.bridgelabz.noteMicroService.dto.ReminderDTO;
 import com.bridgelabz.noteMicroService.exception.NoteException;
 import com.bridgelabz.noteMicroService.model.Note;
+import com.bridgelabz.noteMicroService.model.NoteComparator;
 import com.bridgelabz.noteMicroService.model.NoteContainer;
 import com.bridgelabz.noteMicroService.model.NoteOperation;
 import com.bridgelabz.noteMicroService.model.Response;
@@ -131,6 +133,7 @@ public class NoteServiceImpl implements NoteService {
 	public List<Note> getAllNotes(String userToken) {
 		long userId = tokenGenerator.retrieveIdFromToken(userToken);
 		List<Note> allNotes = noteElasticSearch.searchNoteByUserId(String.valueOf(userId));
+		Collections.sort(allNotes, new NoteComparator());
 		// noteRepository.findAllByUserId(userId).stream()
 		//.filter(u -> u.getUserId() == userId && !(u.isArchived() || u.isTrashed())).collect(Collectors.toList());
 		return allNotes;
